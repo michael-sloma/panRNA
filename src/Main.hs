@@ -16,10 +16,11 @@ convert inp outp = fmap (writeOut outp) . parse (readIn inp)
         readIn e = error $ "unrecognized input format: '" ++ e ++ "'"
         writeOut "fasta" = concatMap writeFaSeq
         writeOut "seq" = concatMap writeDotSeq
+        writeOut "ct" = concatMap writeCt
         writeOut e = error $ "unrecognized output format: '" ++ e ++ "'"
 
 convFun (Right f) = f
-convFun (Left e) = error "parse error"
+convFun (Left e) = error $ "parse error: " ++ show e
 
 defaults = Args {inFormat = "fasta" &= help "input format: one of plain, fasta, seq, ct, vienna (default fasta)",
                  outFormat = "fasta" &= help "output format: one of plain, fasta, seq, ct, vienna (default fasta)"}

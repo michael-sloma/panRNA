@@ -111,5 +111,18 @@ writeDotSeq (RNA (Tag t) (Sequence s) _) = unlines [";", t, s]
 
 writeFaSeq (RNA (Tag t) (Sequence s) _) = unlines [">"++t, s]
 
+writeCt (RNA (Tag t) (Sequence s) (Structure c)) = (unlines . concat) text
+        where text = [[firstline],ctlines]
+              len = length s
+              firstline = (show len)++" "++t
+              ctlines = map toCtLine [1..len]
+              pairMap = HM.fromList c
+              partner i = HM.lookupDefault 0 i pairMap
+              toCtLine i = tabDelimited (i, s!!(i-1), i-1, i+1, partner i, i)
+              tabDelimited (a, b, c, d, e, f) =
+                              (concat . intersperse "\t") $
+                              [show a, show b, show c, show d, show e, show f]
+
+
 pairs :: [(Int,Int)] -> HM.HashMap Int Int
 pairs = HM.fromList
