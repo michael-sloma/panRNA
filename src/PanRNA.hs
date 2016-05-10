@@ -119,7 +119,7 @@ viennaOutput = P.many1 $ do
                   e <- opt (P.manyTill (P.oneOf "1234567890-.() ") P.newline) ""
                   return $ RNA t n s (Energy e)
 
-writeDotSeq (RNA (Tag t) (Sequence s) _ _) = unlines [";", t, s]
+writeDotSeq (RNA (Tag t) (Sequence s) _ _) = unlines [";", t, s++"1"]
 
 writeFaSeq (RNA (Tag t) (Sequence s) _ _) = unlines [">"++t, s]
 
