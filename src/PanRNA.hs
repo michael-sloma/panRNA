@@ -60,7 +60,8 @@ parseSequence tagParser = do t <- tagParser
                              return $ RNA t s emptyStructure noEnergy
 
 ctLine :: P.Parsec String st (Index, Char, Pair)
-ctLine = do i <- int
+ctLine = do P.spaces
+            i <- int
             n <- whitespaces1  >> oneNucleotide
             whitespaces1  >> int >> whitespaces1  >> int
             j <- whitespaces1  >> int
@@ -70,8 +71,8 @@ ctLine = do i <- int
                     if j=="0" then Unpaired else Pair $ read j)
 
 ctTag :: P.Parsec String st Tag
-ctTag = do (P.try $ P.spaces >> int >> whitespaces1) <|> whitespaces
-           t <- P.manyTill (P.anyChar <|> P.digit) eol
+ctTag = do P.try $ P.spaces >> int >> P.spaces
+           t <- P.manyTill P.anyChar (P.try eol)
            return (Tag t)
 
 fasta = P.many1 $ parseSequence faTag
