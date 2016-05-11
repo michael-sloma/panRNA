@@ -81,7 +81,7 @@ dotSeq = P.many1 $ parseSequence dotSeqTag
 
 ct = P.many1 $
        do t <- ctTag
-          c <- P.many1 ctLine
+          c <- P.many1 (P.try ctLine)
           return $ RNA t (toSeq c) (toStructure c) noEnergy
             where toPair (Index i, _, Pair j) = Just (i,j)
                   toPair (Index i, _, Unpaired) = Nothing
