@@ -120,9 +120,11 @@ viennaOutput = P.many1 $ do
                   e <- opt (P.manyTill (P.oneOf "1234567890-.() ") P.newline) ""
                   return $ RNA t n s (Energy e)
 
+toFaTag = (">"++) . filter (\x-> not $ x=='>')
+
 writeDotSeq (RNA (Tag t) (Sequence s) _ _) = unlines [";", t, s++"1"]
 
-writeFaSeq (RNA (Tag t) (Sequence s) _ _) = unlines [">"++t, s]
+writeFaSeq (RNA (Tag t) (Sequence s) _ _) = unlines [toFaTag t, s]
 
 writeCt (RNA (Tag t) (Sequence s) (Structure c) _) = (unlines . concat) text
         where text = [[firstline],ctlines]
@@ -136,7 +138,7 @@ writeCt (RNA (Tag t) (Sequence s) (Structure c) _) = (unlines . concat) text
                               (concat . intersperse "\t") $
                               [show a, [b], show c, show d, show e, show f]
 
-writeDb (RNA (Tag t) (Sequence s) (Structure c) _) = unlines [">"++t, s, toDb]
+writeDb (RNA (Tag t) (Sequence s) (Structure c) _) = unlines [toFaTag t, s, toDb]
         where toDb = map toDbChar [1..(length s)]
               pairMap = HM.fromList c
               partner i = HM.lookup i pairMap
