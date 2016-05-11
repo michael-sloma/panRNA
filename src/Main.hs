@@ -17,6 +17,7 @@ convert inp outp = fmap (writeOut outp) . parse (readIn inp)
         writeOut "fasta" = concatMap writeFaSeq
         writeOut "seq" = concatMap writeDotSeq
         writeOut "ct" = concatMap writeCt
+        writeOut "db" = concatMap writeDb
         writeOut e = error $ "unrecognized output format: '" ++ e ++ "'"
 
 convFun (Right f) = f

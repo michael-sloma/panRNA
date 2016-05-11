@@ -136,6 +136,13 @@ writeCt (RNA (Tag t) (Sequence s) (Structure c) _) = (unlines . concat) text
                               (concat . intersperse "\t") $
                               [show a, [b], show c, show d, show e, show f]
 
+writeDb (RNA (Tag t) (Sequence s) (Structure c) _) = unlines [">"++t, s, toDb]
+        where toDb = map toDbChar [1..(length s)]
+              pairMap = HM.fromList c
+              partner i = HM.lookup i pairMap
+              toDbChar i | Nothing <- partner i = '.'
+                         | Just j <- partner i = if i>j then ')' else '('
+
 
 pairs :: [(Int,Int)] -> HM.HashMap Int Int
 pairs = HM.fromList
