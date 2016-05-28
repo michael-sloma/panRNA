@@ -23,10 +23,11 @@ convert inp outp = fmap (writeOut outp) . P.parse (readIn inp)
 
 convFun (Right f) = f
 convFun (Left e) = error $ "parse error: " ++ show e
-
-preprocess a | "" <- commentChar a = id
-             | (x:[]) <- commentChar a = P.removeComments x
-             | otherwise = error "only a single character to indicate a comment is supported"
+        
+preprocess a = foldl (.) id [comment a]
+  where comment a | "" <- commentChar a = id
+                  | (x:[]) <- commentChar a = P.removeComments x
+                  | otherwise = error "only a single character to indicate a comment is supported"
 
 defaults = Args {inFormat = "fasta" &= help "input format: one of plain, fasta, seq, ct, vienna (default fasta)",
                  outFormat = "fasta" &= help "output format: one of plain, fasta, seq, ct, vienna (default fasta)",
