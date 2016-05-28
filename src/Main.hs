@@ -19,7 +19,7 @@ convert args = fmap (writeOut $ outFormat args) . P.parse (readIn $ inFormat arg
         writeOut "fasta" = concatMap P.writeFaSeq
         writeOut "seq" = concatMap P.writeDotSeq
         writeOut "ct" = concatMap P.writeCt
-        writeOut "db" = concatMap P.writeDb
+        writeOut "vienna" = concatMap P.writeDb
         writeOut "plain" = concatMap P.writePlain
         writeOut e = error $ "unrecognized output format: '" ++ e ++ "'"
 
