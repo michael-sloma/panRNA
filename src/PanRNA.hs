@@ -145,6 +145,9 @@ writeDb (RNA (Tag t) (Sequence s) (Structure c) _) = unlines [toFaTag t, s, toDb
               toDbChar i | Nothing <- partner i = '.'
                          | Just j <- partner i = if i>j then ')' else '('
 
+removeComments :: Char -> String -> String
+removeComments c = unlines . map (takeWhile (/= c)) . lines
+
 
 pairs :: [(Int,Int)] -> HM.HashMap Int Int
 pairs = HM.fromList
