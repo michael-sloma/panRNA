@@ -151,3 +151,7 @@ removeComments c = unlines . map (takeWhile (/= c)) . lines
 
 pairs :: [(Int,Int)] -> HM.HashMap Int Int
 pairs = HM.fromList
+
+filterByIndex :: Integral i => i -> [a] -> [a]
+filterByIndex ind lst = map fst $ filter ((==ind) . snd) indexed where
+    indexed = zip lst [0..]
