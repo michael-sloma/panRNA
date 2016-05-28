@@ -10,7 +10,10 @@ data Args = Args {inFormat :: String,
                   select :: String
                   } deriving (Show, Data, Typeable)
 
-convert args = fmap (writeOut $ outFormat args) . fmap (getIndex args) . P.parse (readIn $ inFormat args)
+convert args = getResult .
+               fmap (writeOut $ outFormat args) .
+               fmap (getIndex args) .
+               P.parse (readIn $ inFormat args)
   where readIn "fasta" = P.fasta
         readIn "seq" = P.dotSeq
         readIn "vienna" = P.viennaOutput
@@ -26,8 +29,8 @@ convert args = fmap (writeOut $ outFormat args) . fmap (getIndex args) . P.parse
         getIndex a | "" <- select a = id
                    | otherwise = P.filterByIndex (read $ select a)
 
-convFun (Right f) = f
-convFun (Left e) = error $ "parse error: " ++ show e
+getResult (Right f) = f
+getResult (Left e) = error $ "parse error: " ++ show e
 
 preprocess a = foldl (.) id [comment a]
   where comment a | "" <- commentChar a = id
@@ -37,8 +40,8 @@ preprocess a = foldl (.) id [comment a]
 defaults = Args {inFormat = "fasta" &= help "input format: one of plain, fasta, seq, ct, vienna (default fasta)",
                  outFormat = "fasta" &= help "output format: one of plain, fasta, seq, ct, vienna (default fasta)",
                  commentChar = "" &= help "comment char: a character to indicate the beginning of a comment (default none)" &= opt "",
-                 select = "" &= help "the select of a particular RNA to convert, starting from 1 (default: convert all RNAs in the file)" &= opt ""
+                 select = "" &= help "the select of a particular RNA to convert, starting from 1 (default: convert all RNAs in the file)"
                  }
 
 main = do a <- cmdArgs defaults
-          interact $ convFun . convert a . preprocess a
+          interact $ convert a . preprocess a
