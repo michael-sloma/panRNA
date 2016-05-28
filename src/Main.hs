@@ -6,10 +6,11 @@ import qualified PanRNA as P
 
 data Args = Args {inFormat :: String,
                   outFormat :: String,
-                  commentChar :: String
+                  commentChar :: String,
+                  select :: String
                   } deriving (Show, Data, Typeable)
 
-convert args = fmap (writeOut $ outFormat args) . P.parse (readIn $ inFormat args)
+convert args = fmap (writeOut $ outFormat args) . fmap (getIndex args) . P.parse (readIn $ inFormat args)
   where readIn "fasta" = P.fasta
         readIn "seq" = P.dotSeq
         readIn "vienna" = P.viennaOutput
@@ -22,6 +23,8 @@ convert args = fmap (writeOut $ outFormat args) . P.parse (readIn $ inFormat arg
         writeOut "vienna" = concatMap P.writeDb
         writeOut "plain" = concatMap P.writePlain
         writeOut e = error $ "unrecognized output format: '" ++ e ++ "'"
+        getIndex a | "" <- select a = id
+                   | otherwise = P.filterByIndex (read $ select a)
 
 convFun (Right f) = f
 convFun (Left e) = error $ "parse error: " ++ show e
@@ -33,7 +36,8 @@ preprocess a = foldl (.) id [comment a]
 
 defaults = Args {inFormat = "fasta" &= help "input format: one of plain, fasta, seq, ct, vienna (default fasta)",
                  outFormat = "fasta" &= help "output format: one of plain, fasta, seq, ct, vienna (default fasta)",
-                 commentChar = "" &= help "comment char: a character to indicate the beginning of a comment (default none)" &= opt ""
+                 commentChar = "" &= help "comment char: a character to indicate the beginning of a comment (default none)" &= opt "",
+                 select = "" &= help "the select of a particular RNA to convert, starting from 1 (default: convert all RNAs in the file)" &= opt ""
                  }
 
 main = do a <- cmdArgs defaults
