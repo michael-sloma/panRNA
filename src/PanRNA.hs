@@ -6,6 +6,7 @@ import Text.Parsec ((<?>), (<|>))
 import Data.Maybe
 import Data.List
 import qualified Data.HashMap.Strict as HM
+import qualified Data.HashSet as HS
 import Debug.Trace
 
 data Tag = Tag String deriving Show
@@ -154,7 +155,6 @@ writeDb (RNA (Tag t) (Sequence s) (Structure c) _) = unlines [toFaTag t, s, toDb
 removeComments :: Char -> String -> String
 removeComments c = unlines . map (takeWhile (/= c)) . lines
 
-
 pairs :: [(Int,Int)] -> HM.HashMap Int Int
 pairs = HM.fromList
 
@@ -163,3 +163,10 @@ filterByIndex ind lst | ind < 1 = error "index for selection must be positive"
                       | otherwise = map fst $ filter ((==(ind-1)) . snd) indexed
                         where
                           indexed = zip lst [0..]
+
+removeNoncanonical :: RNA -> RNA
+removeNoncanonical (RNA t (Sequence s) (Structure ps) e) = rnc s ps
+  where rnc s ps = RNA t (Sequence s) (Structure c) e
+        c = filter (canonical s) ps
+        canonical s p = [s!!(fst p),s!!(snd p)] `elem` canonicalPairs
+        canonicalPairs = ["AU","UA","GC","CG","GU","UG"]
