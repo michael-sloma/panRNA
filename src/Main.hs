@@ -14,16 +14,18 @@ convert args = fmap (writeOut $ outFormat args) . P.parse (readIn $ inFormat arg
         readIn "seq" = P.dotSeq
         readIn "vienna" = P.viennaOutput
         readIn "ct" = P.ct
+        readIn "plain" = P.plain
         readIn e = error $ "unrecognized input format: '" ++ e ++ "'"
         writeOut "fasta" = concatMap P.writeFaSeq
         writeOut "seq" = concatMap P.writeDotSeq
         writeOut "ct" = concatMap P.writeCt
         writeOut "db" = concatMap P.writeDb
+        writeOut "plain" = concatMap P.writePlain
         writeOut e = error $ "unrecognized output format: '" ++ e ++ "'"
 
 convFun (Right f) = f
 convFun (Left e) = error $ "parse error: " ++ show e
-        
+
 preprocess a = foldl (.) id [comment a]
   where comment a | "" <- commentChar a = id
                   | (x:[]) <- commentChar a = P.removeComments x

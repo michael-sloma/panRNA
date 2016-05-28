@@ -44,6 +44,10 @@ nucleotides :: P.Parsec String () Sequence
 nucleotides = do s <- P.sepEndBy nucLine endSequence
                  return . Sequence $ concat s
 
+plain = do ns <- P.many1 nucLine
+           return $ map toRNA ns
+             where toRNA s = RNA emptyTag (Sequence s) emptyStructure noEnergy
+
 faTag :: P.Parsec String () Tag
 faTag = do P.char '>' >> P.spaces
            t <- P.manyTill P.anyChar eol
@@ -121,6 +125,8 @@ viennaOutput = P.many1 $ do
                   return $ RNA t n s (Energy e)
 
 toFaTag = (">"++) . filter (\x-> not $ x=='>')
+
+writePlain (RNA _ (Sequence s) _ _) = s
 
 writeDotSeq (RNA (Tag t) (Sequence s) _ _) = unlines [";", t, s++"1"]
 
