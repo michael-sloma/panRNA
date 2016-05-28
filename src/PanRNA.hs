@@ -170,3 +170,8 @@ removeNoncanonical (RNA t (Sequence s) (Structure ps) e) = rnc s ps
         c = filter (canonical s) ps
         canonical s p = [s!!(fst p),s!!(snd p)] `elem` canonicalPairs
         canonicalPairs = ["AU","UA","GC","CG","GU","UG"]
+
+convertAmbiguous :: Char -> RNA -> RNA
+convertAmbiguous c (RNA t s p e) = RNA t (conv s) p e
+  where conv (Sequence seq) = Sequence $ map (\x->if x `elem` ambg then c else x) seq
+        ambg = "NXYR"
