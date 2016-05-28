@@ -9,7 +9,7 @@ data Args = Args {inFormat :: String,
                   commentChar :: String
                   } deriving (Show, Data, Typeable)
 
-convert inp outp = fmap (writeOut outp) . P.parse (readIn inp)
+convert args = fmap (writeOut $ outFormat args) . P.parse (readIn $ inFormat args)
   where readIn "fasta" = P.fasta
         readIn "seq" = P.dotSeq
         readIn "vienna" = P.viennaOutput
@@ -35,4 +35,4 @@ defaults = Args {inFormat = "fasta" &= help "input format: one of plain, fasta, 
                  }
 
 main = do a <- cmdArgs defaults
-          interact $ convFun . convert (inFormat a) (outFormat a) . preprocess a
+          interact $ convFun . convert a . preprocess a
