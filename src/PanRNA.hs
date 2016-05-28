@@ -16,7 +16,7 @@ data RNA = RNA Tag Sequence Structure Energy deriving Show
 data Pair = Unpaired | Pair Int deriving (Show, Eq)
 data Index = Index Int deriving (Show, Eq)
 
-parse rule text = P.parse rule "(debug)" text
+parse rule text = P.parse rule "" text
 
 opt parser defaultVal = P.try parser <|> (return defaultVal)
 
