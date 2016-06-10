@@ -3,11 +3,11 @@ The RNA secondary structure world has an annoyingly large number of different fo
 Usage: panRNA -i [input format] -o [output format]
 
 Currently supported formats:
-plain (text file with one sequence per line)
-fasta (everyone knows this one)
-seq (mfold/RNAstructure legacy .seq format)
-ct (mfold/RNAstructure connectivity table format)
-vienna (viennaRNA style dot-bracket structures)
+* plain (text file with one sequence per line)
+* fasta (everyone knows this one)
+* seq (mfold/RNAstructure legacy .seq format)
+* ct (mfold/RNAstructure connectivity table format)
+* vienna (viennaRNA style dot-bracket structures)
 
 Options:
 * -s <n>, --select=<n]: only emit the structure at index n (1-indexed)
