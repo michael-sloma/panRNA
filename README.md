@@ -10,7 +10,7 @@ Currently supported formats:
 * vienna (viennaRNA style dot-bracket structures)
 
 Options:
-* -s <n>, --select=<n]: only emit the structure at index n (1-indexed)
+* -s [n], --select=[n]: only emit the structure at index n (1-indexed)
 * -r, --removenoncanonical: remove pairs that are not A-U, G-C, or G-U
 * --commentchar=[c]: character c is treated as the beginning of a comment, and the rest of the line is ignored
 * --convertambiguous=[c]: convert all IUPAC ambiguity codes (e.g. R, Y, X) to character c
