@@ -5,8 +5,6 @@ clustal (rw)
 pick an xml parser and implement RNAml parsing
 add a "concatenate" mode to add info to an RNAml file
 
-add an option to convert ambiguity codes to a user-defines character
-
 decide on a strategy for dependency management
 
 migrate into RNAstructure
