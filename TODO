@@ -8,6 +8,5 @@ add a "concatenate" mode to add info to an RNAml file
 add an option to convert ambiguity codes to a user-defines character
 
 decide on a strategy for dependency management
-       add deps locally OR make bulletproof build
 
 migrate into RNAstructure
