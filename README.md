@@ -16,3 +16,14 @@ Options:
 * --convertambiguous=[c]: convert all IUPAC ambiguity codes (e.g. R, Y, X) to character c
   
 Please send any comments or bug reports to michael_sloma@urmc.rochester.edu
+
+Installation with cabal on linux:
+
+If you don't have it, install the Haskell Platform from the website or with your package manager
+
+
+    git clone git@github.com:michael-sloma/panRNA.git
+    cabal sandbox init # optional, keeps your global packages from being polluted
+    cabal configure --bindir=/location/for/executable
+    cabal install --only-dependencies
+    cabal build
