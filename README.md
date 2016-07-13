@@ -15,7 +15,6 @@ Options:
 * --commentchar=[c]: character c is treated as the beginning of a comment, and the rest of the line is ignored
 * --convertambiguous=[c]: convert all IUPAC ambiguity codes (e.g. R, Y, X) to character c
   
-Please send any comments or bug reports to michael_sloma@urmc.rochester.edu
 
 Installation with cabal on linux:
 
@@ -27,3 +26,6 @@ If you don't have it, install the Haskell Platform from the website or with your
     cabal configure --bindir=/location/for/executable
     cabal install --only-dependencies
     cabal build
+
+
+Please send any comments or bug reports to michael_sloma@urmc.rochester.edu
