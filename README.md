@@ -1,6 +1,6 @@
 The RNA secondary structure world has an annoyingly large number of different formats for describing sequences and structures. This is a simple command line utility to interconvert between formats. It accepts the input format from standard in, and emits the new format to standard out, for convenient incorporation in unix pipelines.
 
-Usage: panRNA -i [input format] -o [output format]
+Usage: panRNA -i [input format] -o [output format] [options]
 
 Currently supported formats:
 * plain (text file with one sequence per line)
