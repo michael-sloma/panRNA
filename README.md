@@ -18,10 +18,12 @@ Options:
 
 Installation with cabal on linux:
 
-If you don't have it, install the Haskell Platform from the website or with your package manager
+If you don't have it, install the Haskell Platform from the website or with your package manager.
+
+Then,
 
 
-    git clone git@github.com:michael-sloma/panRNA.git
+    git clone git@github.com:michael-sloma/panRNA.git && cd panRNA
     cabal sandbox init # optional, keeps your global packages from being polluted
     cabal configure --bindir=/location/for/executable
     cabal install --only-dependencies
