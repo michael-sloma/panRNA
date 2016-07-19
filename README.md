@@ -29,3 +29,4 @@ If you don't have it, install the Haskell Platform from the website or with your
 
 
 Please send any comments or bug reports to michael_sloma@urmc.rochester.edu
+In particular, please tell me if it fails on valid input!
