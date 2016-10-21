@@ -51,7 +51,7 @@ defaults = Args {inFormat = "fasta" &= help "input format: one of plain, fasta, 
                  outFormat = "fasta" &= help "output format: one of plain, fasta, seq, ct, vienna (default fasta)",
                  commentChar = "" &= help "comment char: a character to indicate the beginning of a comment (default none)" &= opt "",
                  removeNoncanonical = False &= help "remove noncanonical: remove pairs that are not AU, GC or GU",
-                 convertAmbiguous = "" &= help ": convert ambiguous: convert nucleotide ambiguity codes (N, X, Y, R) to the specified character",
+                 convertAmbiguous = "" &= help ": convert ambiguous: convert nucleotide ambiguity codes (N, X, Y, R, S, W, K, M, B, D, H, V) to the specified character",
                  select = "" &= help "the select of a particular RNA to convert, starting from 1 (default: convert all RNAs in the file)"
                  }
 
