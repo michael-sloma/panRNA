@@ -174,4 +174,4 @@ removeNoncanonical (RNA t (Sequence s) (Structure ps) e) = rnc s ps
 convertAmbiguous :: Char -> RNA -> RNA
 convertAmbiguous c (RNA t s p e) = RNA t (conv s) p e
   where conv (Sequence seq) = Sequence $ map (\x->if x `elem` ambg then c else x) seq
-        ambg = "NXYR"
+        ambg = "NXYRSWKMBDHV"
